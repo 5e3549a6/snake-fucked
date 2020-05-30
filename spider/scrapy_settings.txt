@@ -1,0 +1,131 @@
+# -*- coding: utf-8 -*-
+
+# Scrapy settings for QiShuSpider project
+#
+# For simplicity, this file contains only settings considered important or
+# commonly used. You can find more settings consulting the documentation:
+#
+#     https://doc.scrapy.org/en/latest/topics/settings.html
+#     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+#     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+
+#BOT_NAME:表示是的scrapy的项目名称，当执行命令scrapy startproject +项目名称的时候，scrapy会自动填充BOT_NAME的值
+BOT_NAME = 'QiShuSpider'
+
+#SPIDER_MODULES：用于存放爬虫代码的目录，默认是放在QiShuSpider.spiders的目录当中，也是scrapy搜索爬虫的路径。
+SPIDER_MODULES = ['QiShuSpider.spiders']
+NEWSPIDER_MODULE = 'QiShuSpider.spiders'
+
+
+# Crawl responsibly by identifying yourself (and your website) on the user-agent
+#scrapy默认生成的浏览器标识。也可以通过自定义中间件的方式，设置随机的浏览器标识
+# USER_AGENT = 'QiShuSpider (+http://www.yourdomain.com)'
+
+#设置是否遵循网站的robot协议
+# Obey robots.txt rules
+ROBOTSTXT_OBEY = False
+
+# Configure maximum concurrent requests performed by Scrapy (default: 16)
+#用于设置scrapy能够同时请求的最大请求数，也就是scrapy下载器downloader并发请求的最大值，默认是16.
+# CONCURRENT_REQUESTS = 32
+
+# Configure a delay for requests for the same website (default: 0)
+# See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
+# See also autothrottle settings and docs
+
+#用于设置下载器downloader的下载延迟，也就是每次下载请求之间的间隔，可以用于scrapy爬虫的爬取速度，减轻对方服务器压力。
+# DOWNLOAD_DELAY = 3
+# The download delay setting will honor only one of:
+
+#CONCURRENT_REQUESTS_PER_DOMAIN：针对某一个网站进行并发请求的最大值，是针对网站的域名而言的。
+# CONCURRENT_REQUESTS_PER_DOMAIN = 16
+#CONCURRENT_REQUESTS_PER_IP：单个ip能够进行并非并非请求的最大值，并不针对于某一个网站，而是针对任何域名下的网站能够发起的最大请求数
+# CONCURRENT_REQUESTS_PER_IP = 16
+
+# Disable cookies (enabled by default)
+#配置scrapy在进行请求的时候，请求中是否携带cookie，默认情况下是携带的。因为有些网站在访问的时候可能会对cookie禁用，如果发现请求中带有cookie信息，则会对爬虫进行封杀。可以通过该设置来决定是否携带cookie
+# COOKIES_ENABLED = False
+
+# Disable Telnet Console (enabled by default)
+
+#TELNETCONSOLE_ENABLED = False
+
+# Override the default request headers:
+
+#请求时，设置的默认请求头，可以自定义
+# DEFAULT_REQUEST_HEADERS = {
+#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+#   'Accept-Language': 'en',
+# }
+
+# Enable or disable spider middlewares
+# See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+
+#SPIDER_MIDDLEWARES：爬虫中间件，用于处理引擎和爬虫之间的数据。可以在middlewares.py文件中自定义爬虫中间件
+
+#SPIDER_MIDDLEWARES = {
+#    'QiShuSpider.middlewares.QishuspiderSpiderMiddleware': 543,
+#}
+
+# Enable or disable downloader middlewares
+# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+
+#DOWNLOADER_MIDDLEWARES：下载中间件，用于处理引擎和下载器之间的数据，可以在middlewares.py文件中自定义下载中间件
+#DOWNLOADER_MIDDLEWARES = {
+#    'QiShuSpider.middlewares.QishuspiderDownloaderMiddleware': 543,
+#}
+
+# Enable or disable extensions
+# See https://doc.scrapy.org/en/latest/topics/extensions.html
+#EXTENSIONS = {
+#    'scrapy.extensions.telnet.TelnetConsole': None,
+#}
+
+# Configure item pipelines
+# See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+#ITEM_PIPELINES：处理item数据的管道，可以在pipeline里面自定义item数据的存储方式。
+ITEM_PIPELINES = {
+   # 'QiShuSpider.pipelines.QishuspiderPipeline': 300,
+    #scrapy自带的图片下载pipeline
+    'scrapy.pipelines.images.ImagesPipeline': 1,
+    # scrapy自带的文件下载pipeline
+    'scrapy.pipelines.files.FilesPipeline': 2
+}
+#设置图片的存储位置
+IMAGES_STORE='imgs'
+IMAGES_URLS_FIELD='novel_img_url'
+
+#设置文件的存储位置
+FILES_STORE='files'
+FILES_URLS_FIELD='novel_download_url'
+
+
+#scrapy的限速扩展
+# Enable and configure the AutoThrottle extension (disabled by default)
+# See https://doc.scrapy.org/en/latest/topics/autothrottle.html
+
+#是否启用限速扩展，默认是不启用的
+# AUTOTHROTTLE_ENABLED = True
+# The initial download delay
+
+#初始下载延迟，默认是无延迟的。
+# AUTOTHROTTLE_START_DELAY = 5
+
+# The maximum download delay to be set in case of high latencies
+#在高延迟情况下最大的下载延迟(单位秒)。如果超过该时间，则不再等待，直接下载。
+#AUTOTHROTTLE_MAX_DELAY = 60
+# The average number of requests Scrapy should be sending in parallel to
+# each remote server
+#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+# Enable showing throttling stats for every response received:
+#AUTOTHROTTLE_DEBUG = False
+
+# Enable and configure HTTP caching (disabled by default)
+# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+#HTTP：启用HTTP缓存，是否针对所有的请求进行本地数据的缓存，默认是禁用的。开启时，数据会优先从本地缓存中读取，爬取速度会快一些。
+#HTTPCACHE_ENABLED = True
+#HTTPCACHE_EXPIRATION_SECS = 0
+#HTTPCACHE_DIR = 'httpcache'
+#HTTPCACHE_IGNORE_HTTP_CODES = []
+#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+#———————————————————————————————————————————————————————————————————————
