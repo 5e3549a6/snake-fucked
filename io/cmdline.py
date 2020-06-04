@@ -1,4 +1,4 @@
-
+'''
 python cmd模块是一个简易的命令行解析框架，我们可以创建简易的命令行解释器。
 只需要创建一个类，并继承cmd.Cmd。然后就可以在下面写一些方法。你写的方法越多也就是你的解析的框架能解析的越多
 
@@ -12,7 +12,7 @@ postcmd(stop，line)：命令line解析之后被调用该方法
 preloop()：cmdloop()运行之前调用该方法；
 postloop()：cmdloop()退出之后调用该方法；
 ————————————————
-
+'''
 
 
 
@@ -100,6 +100,3 @@ class InstallCmd(Cmd):
         sub_cmd = subprocess.Popen(
             cmd, shell=True, stdout=subprocess.PIPE, cwd=cwd)
         return sub_cmd.communicate()[0]
-————————————————
-版权声明：本文为CSDN博主「lucky404」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/lucky404/java/article/details/79402478
