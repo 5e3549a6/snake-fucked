@@ -1,0 +1,8 @@
+def bubbleSort(relist):
+    len_ = len(relist)
+    for i in range(len_):
+        print("第 %s 趟排序"%(i+1))
+        for j in range(0,len_-i-1):
+            if relist[j] > relist[j+1]:
+                relist[j+1], relist[j] = relist[j], relist[j+1]
+    return relist
